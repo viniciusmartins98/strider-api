@@ -1,0 +1,6 @@
+@Strider.BackEnd.Api_HostAddress = http://localhost:5082
+
+GET {{Strider.BackEnd.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
