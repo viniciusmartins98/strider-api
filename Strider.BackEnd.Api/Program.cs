@@ -1,4 +1,4 @@
-using Strider.BackEnd.Infra;
+using Strider.BackEnd.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Dependency Injection
-builder.Services.AddInfra();
+builder.Services.AddDependencies();
 
 var app = builder.Build();
 
