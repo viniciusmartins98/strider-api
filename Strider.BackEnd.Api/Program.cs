@@ -1,4 +1,5 @@
 using Strider.BackEnd.Api;
+using Strider.BackEnd.Api.Security.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add CORS
+builder.Services.AddCors(builder.Configuration);
+
 // Dependency Injection
 builder.Services.AddDependencies();
+
 
 var app = builder.Build();
 
@@ -22,6 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
