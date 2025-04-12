@@ -28,9 +28,9 @@ namespace Strider.BackEnd.Api.Security.Auth.Jwt
             };
         }
 
-        public string GenerateJwtToken()
+        public string RefreshJwtToken()
         {
-            if (httpAccessor.HttpContext.User == null)
+            if (httpAccessor.HttpContext.User?.Identity?.IsAuthenticated == false)
             {
                 return string.Empty;
             }

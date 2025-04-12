@@ -17,7 +17,7 @@ namespace Strider.BackEnd.Api.Middlewares
                 await _next(context);
                 return;
             }
-            var accessToken = jwtHandler.GenerateJwtToken();
+            var accessToken = jwtHandler.RefreshJwtToken();
             context.Response.Headers.Remove("x-access-token");
             context.Response.Headers.Add("x-access-token", accessToken);
             await _next(context);
