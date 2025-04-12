@@ -12,10 +12,10 @@ namespace Strider.BackEnd.Api.Identity
 
         public UserContext(IHttpContextAccessor httpContextAccessor)
         {
-            var claimsPrincipal = httpContextAccessor.HttpContext.User;
-            Id = int.Parse(claimsPrincipal.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? "0");
-            Name = claimsPrincipal.FindFirstValue(JwtRegisteredClaimNames.Name);
-            Email = claimsPrincipal.FindFirstValue(JwtRegisteredClaimNames.Email);
+            var claimsPrincipal = httpContextAccessor.HttpContext?.User;
+            Id = int.Parse(claimsPrincipal?.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? "0");
+            Name = claimsPrincipal?.FindFirstValue(JwtRegisteredClaimNames.Name);
+            Email = claimsPrincipal?.FindFirstValue(JwtRegisteredClaimNames.Email);
         }
     }
 }

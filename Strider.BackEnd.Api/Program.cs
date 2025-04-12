@@ -1,4 +1,5 @@
 using Strider.BackEnd.Api;
+using Strider.BackEnd.Api.Middlewares;
 using Strider.BackEnd.Api.Security.Auth;
 using Strider.BackEnd.Api.Security.Cors;
 
@@ -35,6 +36,8 @@ app.UseHttpsRedirection();
 app.UseCors();
 
 app.UseAuthorization();
+
+app.UseCustomMiddlewares();
 
 app.MapControllers();
 
