@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Strider.BackEnd.Api.Security.Auth.Jwt.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace Strider.BackEnd.Api.Security.Auth.Jwt
@@ -17,9 +18,11 @@ namespace Strider.BackEnd.Api.Security.Auth.Jwt
                 audience: jwtModel.Audience,
                 claims: jwtModel.Claims,
                 expires: DateTime.UtcNow.AddMinutes(jwtModel.ExpirationMinutes),
-                signingCredentials: signingCredentials);
+                signingCredentials: signingCredentials
+            );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var handler = new JwtSecurityTokenHandler();
+            return handler.WriteToken(token);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Strider.BackEnd.Application.Models.Users;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace Strider.BackEnd.Api.Security.Auth.Claims
@@ -7,18 +8,16 @@ namespace Strider.BackEnd.Api.Security.Auth.Claims
     {
         public ClaimsIdentity GetClaimsIdentity(UserModel user)
         {
-            List<Claim> claims = [
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email)
-            ];
-            return new ClaimsIdentity(claims, "Jwt");
+            List<Claim> claims = GetClaimsFromUser(user);
+            return new ClaimsIdentity(claims, "Basic");
         }
 
         public List<Claim> GetClaimsFromUser(UserModel user)
         {
             return [
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Name, user.Name),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
             ];
         }
     }

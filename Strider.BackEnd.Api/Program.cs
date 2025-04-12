@@ -1,6 +1,5 @@
 using Strider.BackEnd.Api;
 using Strider.BackEnd.Api.Security.Auth;
-using Strider.BackEnd.Api.Security.Auth.Jwt;
 using Strider.BackEnd.Api.Security.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
