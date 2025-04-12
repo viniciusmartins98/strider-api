@@ -2,7 +2,6 @@
 using Strider.BackEnd.Api.Security.Auth.Claims;
 using Strider.BackEnd.Api.Security.Auth.Jwt.Models;
 using Strider.BackEnd.Application.Models.Users;
-using Strider.BackEnd.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
