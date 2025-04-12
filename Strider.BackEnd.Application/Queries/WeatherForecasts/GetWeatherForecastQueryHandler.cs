@@ -2,7 +2,7 @@
 using Strider.BackEnd.Application.Repositories;
 using Strider.BackEnd.Domain.Entities;
 
-namespace Strider.BackEnd.Application.Queries
+namespace Strider.BackEnd.Application.Queries.WeatherForecasts
 {
     public class GetWeatherForecastQueryHandler(IWeatherForecastRepository repository) : IRequestHandler<GetWeatherForecastQuery, IEnumerable<WeatherForecast>>
     {

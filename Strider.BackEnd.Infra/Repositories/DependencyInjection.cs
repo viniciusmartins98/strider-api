@@ -7,7 +7,10 @@ namespace Strider.BackEnd.Infra.Repositories
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            return services.AddTransient<IWeatherForecastRepository, WeatherForecastRepository>();
+            return services
+                .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
+                .AddTransient<IUserRepository, UserRepository>()
+                ;
         }
     }
 }
