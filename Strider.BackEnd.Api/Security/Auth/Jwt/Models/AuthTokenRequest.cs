@@ -1,6 +1,6 @@
 ﻿namespace Strider.BackEnd.Api.Security.Auth.Jwt.Models
 {
-    public class AuthRequest
+    public class AuthTokenRequest
     {
         public string Email { get; set; }
 
