@@ -1,14 +1,13 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using Strider.BackEnd.Api.Security.Auth.Claims;
 using Strider.BackEnd.Api.Security.Auth.Jwt.Models;
 using Strider.BackEnd.Application.Models.Users;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace Strider.BackEnd.Api.Security.Auth.Jwt
 {
     public class JwtHandler(
-        ClaimsHandler claimsHandler,
         IConfiguration configuration,
         IHttpContextAccessor httpAccessor)
     {
@@ -18,29 +17,13 @@ namespace Strider.BackEnd.Api.Security.Auth.Jwt
             {
                 AccessToken = this.GenerateJwtToken(new JwtModel
                 {
-                    Claims = claimsHandler.GetClaimsFromUser(user),
+                    Claims = GetClaimsFromUser(user),
                     ExpirationMinutes = configuration.GetValue<int>("Jwt:ExpirationMinutes"),
                     Audience = configuration.GetValue<string>("Jwt:Audience"),
                     Issuer = configuration.GetValue<string>("Jwt:Issuer"),
                     Secret = configuration.GetValue<string>("Jwt:Secret")
                 })
             };
-        }
-
-        public string RefreshJwtToken()
-        {
-            if (httpAccessor.HttpContext.User?.Identity?.IsAuthenticated == false)
-            {
-                return string.Empty;
-            }
-            return GenerateJwtToken(new JwtModel
-            {
-                Claims = httpAccessor.HttpContext.User.Claims,
-                ExpirationMinutes = configuration.GetValue<int>("Jwt:ExpirationMinutes"),
-                Audience = configuration.GetValue<string>("Jwt:Audience"),
-                Issuer = configuration.GetValue<string>("Jwt:Issuer"),
-                Secret = configuration.GetValue<string>("Jwt:Secret")
-            });
         }
 
         private string GenerateJwtToken(JwtModel jwtModel)
@@ -58,6 +41,31 @@ namespace Strider.BackEnd.Api.Security.Auth.Jwt
 
             var handler = new JwtSecurityTokenHandler();
             return handler.WriteToken(token);
+        }
+
+        private List<Claim> GetClaimsFromUser(UserModel user)
+        {
+            return [
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Name, user.Name),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            ];
+        }
+
+        public string RefreshJwtToken()
+        {
+            if (httpAccessor.HttpContext.User?.Identity?.IsAuthenticated == false)
+            {
+                return string.Empty;
+            }
+            return GenerateJwtToken(new JwtModel
+            {
+                Claims = httpAccessor.HttpContext.User.Claims,
+                ExpirationMinutes = configuration.GetValue<int>("Jwt:ExpirationMinutes"),
+                Audience = configuration.GetValue<string>("Jwt:Audience"),
+                Issuer = configuration.GetValue<string>("Jwt:Issuer"),
+                Secret = configuration.GetValue<string>("Jwt:Secret")
+            });
         }
     }
 }
