@@ -1,5 +1,4 @@
-﻿using Strider.BackEnd.Api.Security.Auth.Claims;
-using Strider.BackEnd.Api.Security.Auth.Jwt;
+﻿using Strider.BackEnd.Api.Security.Auth.Jwt;
 
 namespace Strider.BackEnd.Api.Security.Auth
 {
@@ -9,7 +8,6 @@ namespace Strider.BackEnd.Api.Security.Auth
         {
             services.AddJwtBearerAuth(configuration);
             services.AddTransient<JwtHandler>();
-            services.AddTransient<ClaimsHandler>();
             return services;
         }
     }
